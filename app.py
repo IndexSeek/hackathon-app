@@ -105,7 +105,8 @@ import pandas as pd
 def run(session):
     for file in session.sql("LS @GCS_PARQUET_STAGE").select('"name"').collect():
         table_name = file.name.split("/")[-1].upper().split(".")[0]
-        df = session.read.parquet("@GCS_PARQUET_STAGE/Challenge1_train_data.parquet").to_pandas()
+        filename = file.name.split("/")[-1].split(".")[0]
+        df = session.read.parquet(f"@GCS_PARQUET_STAGE/{filename}.parquet").to_pandas()
         df.columns = [col.upper() for col in df.columns]
         session.create_dataframe(df).write.save_as_table(table_name, mode="overwrite")
     return "Success!"
