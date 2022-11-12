@@ -1,0 +1,5 @@
+streamlit
+streamlit-pandas-profiling
+snowflake-snowpark-python
+snowflake-connector-python[pandas]
+pyarrow==8.0.0
